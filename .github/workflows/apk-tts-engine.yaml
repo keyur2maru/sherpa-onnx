@@ -99,44 +99,44 @@ jobs:
           ls -lh ./apks/
           du -h -d1 .
 
-      # https://github.com/marketplace/actions/sign-android-release
-      - uses: r0adkll/sign-android-release@v1
-        name: Sign app APK
-        with:
-          releaseDirectory: ./apks
-          signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
-          alias: ${{ secrets.ANDROID_SIGNING_KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.ANDROID_SIGNING_KEY_STORE_PASSWORD }}
-        env:
-          BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
+      # # https://github.com/marketplace/actions/sign-android-release
+      # - uses: r0adkll/sign-android-release@v1
+      #   name: Sign app APK
+      #   with:
+      #     releaseDirectory: ./apks
+      #     signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
+      #     alias: ${{ secrets.ANDROID_SIGNING_KEY_ALIAS }}
+      #     keyStorePassword: ${{ secrets.ANDROID_SIGNING_KEY_STORE_PASSWORD }}
+      #   env:
+      #     BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
 
-      - name: Display APK for TTS engine after signing
-        shell: bash
-        run: |
-          ls -lh ./apks/
-          du -h -d1 .
+      # - name: Display APK for TTS engine after signing
+      #   shell: bash
+      #   run: |
+      #     ls -lh ./apks/
+      #     du -h -d1 .
 
-      - name: Rename APK for TTS engine after signing
-        shell: bash
-        run: |
-          cd apks
-          rm -fv signingKey.jks
-          rm -fv *.apk.idsig
-          rm -fv *-aligned.apk
+      # - name: Rename APK for TTS engine after signing
+      #   shell: bash
+      #   run: |
+      #     cd apks
+      #     rm -fv signingKey.jks
+      #     rm -fv *.apk.idsig
+      #     rm -fv *-aligned.apk
 
-          all_apks=$(ls -1 *-signed.apk)
-          echo "----"
-          echo $all_apks
-          echo "----"
-          for apk in ${all_apks[@]}; do
-            n=$(echo $apk | sed -e s/-signed//)
-            mv -v $apk $n
-          done
+      #     all_apks=$(ls -1 *-signed.apk)
+      #     echo "----"
+      #     echo $all_apks
+      #     echo "----"
+      #     for apk in ${all_apks[@]}; do
+      #       n=$(echo $apk | sed -e s/-signed//)
+      #       mv -v $apk $n
+      #     done
 
-          cd ..
+      #     cd ..
 
-          ls -lh ./apks/
-          du -h -d1 .
+      #     ls -lh ./apks/
+      #     du -h -d1 .
 
       - uses: actions/upload-artifact@v4
         if: false
